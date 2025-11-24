@@ -2,15 +2,15 @@ services:
   # Backend Service
   - type: web
     name: finance-backend
-    runtime: java
-    buildCommand: cd backend && ./mvnw clean package -DskipTests
-    startCommand: cd backend && java -jar target/app-0.0.1-SNAPSHOT.jar
+    env: java
+    rootDir: backend
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -jar target/app-0.0.1-SNAPSHOT.jar
     envVars:
       - key: JAVA_VERSION
         value: 17
       - key: PORT
         value: 8080
-      # Uncomment and fill these if using PostgreSQL
       - key: SPRING_DATASOURCE_URL
         value: jdbc:postgresql://dpg-d4i00kogjchc73di8nmg-a/finance_s57w
       - key: SPRING_DATASOURCE_USERNAME
@@ -23,9 +23,10 @@ services:
   # Frontend Service
   - type: web
     name: finance-frontend
-    runtime: static
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/dist
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
         value: https://finance-backend.onrender.com/api
