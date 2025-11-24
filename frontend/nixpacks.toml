@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ['nodejs-18_x']
+
+[phases.build]
+cmds = ['npm install', 'npm run build']
+
+[phases.deploy]
+cmds = ['npm install -g serve', 'serve -s dist -l $PORT']
+
+[start]
+cmd = 'serve -s dist -l $PORT'
