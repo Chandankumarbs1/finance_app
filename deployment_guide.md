@@ -14,7 +14,23 @@ git commit -m "Prepare for deployment"
 git push
 ```
 
-## Step 2: Deploy Backend (Java Spring Boot)
+## Step 2: (Optional) Create PostgreSQL Database
+
+> **Note**: You can skip this step and use H2 database (in-memory), but your data will be lost when the service restarts. For production, PostgreSQL is recommended.
+
+1.  On Render Dashboard, click **New +** → **PostgreSQL**.
+2.  **Configure Database**:
+    *   **Name**: `finance-db`
+    *   **Database**: `finance` (or any name you prefer)
+    *   **User**: (auto-generated)
+    *   **Region**: Same as your backend service
+    *   **Instance Type**: Free
+3.  Click **Create Database**.
+4.  Wait for the database to be created.
+5.  Once created, go to the database page and copy the **Internal Database URL**.
+6.  **Keep this URL handy** - you'll need it in the next step.
+
+## Step 3: Deploy Backend (Java Spring Boot)
 
 1.  On Render Dashboard, click **New +** → **Web Service**.
 2.  Connect your GitHub repository (`finance_app`).
@@ -28,20 +44,17 @@ git push
 4.  **Add Environment Variables**:
     *   `JAVA_VERSION`: `17`
     *   `PORT`: `8080`
-5.  **(Optional) Add PostgreSQL Database**:
-    *   Click **New +** → **PostgreSQL** (Free tier)
-    *   After creation, copy the **Internal Database URL**
-    *   Add these environment variables to your backend service:
-        *   `SPRING_DATASOURCE_URL`: Convert the postgres URL to JDBC format
-          - Example: `postgres://user:pass@host:5432/db` → `jdbc:postgresql://host:5432/db`
-        *   `SPRING_DATASOURCE_USERNAME`: (from database credentials)
-        *   `SPRING_DATASOURCE_PASSWORD`: (from database credentials)
-        *   `SPRING_JPA_HIBERNATE_DDL_AUTO`: `update`
+5.  **If you created PostgreSQL database in Step 2**, add these additional environment variables:
+    *   `SPRING_DATASOURCE_URL`: Convert the Internal Database URL to JDBC format
+      - Example: `postgres://user:pass@host:5432/db` → `jdbc:postgresql://host:5432/db`
+    *   `SPRING_DATASOURCE_USERNAME`: (from database credentials)
+    *   `SPRING_DATASOURCE_PASSWORD`: (from database credentials)
+    *   `SPRING_JPA_HIBERNATE_DDL_AUTO`: `update`
 6.  Click **Create Web Service**.
 7.  Wait for deployment to complete (5-10 minutes).
 8.  **Copy the Backend URL** (e.g., `https://finance-backend.onrender.com`).
 
-## Step 3: Deploy Frontend (React)
+## Step 4: Deploy Frontend (React)
 
 1.  On Render Dashboard, click **New +** → **Static Site**.
 2.  Connect the same GitHub repository.
@@ -56,7 +69,7 @@ git push
 5.  Click **Create Static Site**.
 6.  Wait for deployment to complete.
 
-## Step 4: Access Your App
+## Step 5: Access Your App
 
 Once both deployments are complete:
 1.  Render will provide a Frontend URL (e.g., `https://finance-frontend.onrender.com`)
