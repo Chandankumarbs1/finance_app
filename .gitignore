@@ -1,0 +1,9 @@
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# OS
+.DS_Store
+.gemini/
