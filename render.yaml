@@ -1,14 +1,10 @@
 services:
-  # Backend Service
+  # Backend Service (using Docker)
   - type: web
     name: finance-backend
-    env: java
-    rootDir: backend
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/app-0.0.1-SNAPSHOT.jar
+    runtime: docker
+    dockerfilePath: ./Dockerfile
     envVars:
-      - key: JAVA_VERSION
-        value: 17
       - key: PORT
         value: 8080
       - key: SPRING_DATASOURCE_URL
@@ -30,4 +26,3 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://finance-backend.onrender.com/api
-        # ⚠️ IMPORTANT: Update this with your actual backend URL after backend is deployed
