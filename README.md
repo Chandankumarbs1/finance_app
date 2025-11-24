@@ -3,14 +3,16 @@
 A modern, full-stack personal finance application to track your income and expenses. Built with **Java Spring Boot** (Backend) and **React** (Frontend).
 
 ## Features
-- 💰 **Track Transactions**: Add income (Credit) and expense (Debit) transactions.
+- � **Multi-User Support**: Secure Login and Registration system.
+- 🛡️ **Data Privacy**: Each user has their own private dashboard and transaction history.
+- �💰 **Track Transactions**: Add income (Credit) and expense (Debit) transactions.
 - 📊 **Monthly Reports**: View total income, expense, and balance for the current month.
 - 📈 **Visual Insights**: Interactive pie chart showing Income vs Expense.
 - 🇮🇳 **INR Currency**: Native support for Indian Rupee (₹).
 - 📱 **Mobile Friendly**: Responsive design accessible via local network.
 
 ## Tech Stack
-- **Backend**: Java 17, Spring Boot 3.2.0, Spring Data JPA, H2 Database (Dev), PostgreSQL (Prod).
+- **Backend**: Java 17, Spring Boot 3.2.0, Spring Security (JWT), Spring Data JPA, H2 Database (Dev), PostgreSQL (Prod).
 - **Frontend**: React 19, Vite, Tailwind CSS v3, Recharts, Axios, Lucide React.
 
 ## Getting Started
@@ -38,6 +40,9 @@ A modern, full-stack personal finance application to track your income and expen
 
 3.  **Access the App**
     Open your browser and go to `http://localhost:5173`.
+    *   You will be redirected to the **Login** page.
+    *   Click **Register** to create a new account.
+    *   Log in to access your dashboard.
 
 ## Mobile Access (Local Network)
 To access the app from your phone:

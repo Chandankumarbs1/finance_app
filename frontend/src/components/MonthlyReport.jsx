@@ -2,7 +2,7 @@ import React from 'react';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 
 const MonthlyReport = ({ report }) => {
-    if (!report) return null;
+    if (!report || typeof report.totalIncome === 'undefined') return null;
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
@@ -12,7 +12,7 @@ const MonthlyReport = ({ report }) => {
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">Total Income</p>
-                    <p className="text-2xl font-bold text-gray-900">₹{report.income.toFixed(2)}</p>
+                    <p className="text-2xl font-bold text-gray-900">₹{report.totalIncome.toFixed(2)}</p>
                 </div>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md flex items-center gap-4 border-l-4 border-red-500">
@@ -21,7 +21,7 @@ const MonthlyReport = ({ report }) => {
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">Total Expense</p>
-                    <p className="text-2xl font-bold text-gray-900">₹{report.expense.toFixed(2)}</p>
+                    <p className="text-2xl font-bold text-gray-900">₹{report.totalExpense.toFixed(2)}</p>
                 </div>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md flex items-center gap-4 border-l-4 border-blue-500">

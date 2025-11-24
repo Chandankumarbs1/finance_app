@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import AddTransaction from './components/AddTransaction';
 import TransactionList from './components/TransactionList';
 import MonthlyReport from './components/MonthlyReport';
 import SpendChart from './components/SpendChart';
-import { Wallet } from 'lucide-react';
+import Login from './components/Login';
+import Register from './components/Register';
+import PrivateRoute from './components/PrivateRoute';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { Wallet, LogOut } from 'lucide-react';
 
-function App() {
+const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
-  const [report, setReport] = useState(null);
+  const [report, setReport] = useState({ totalIncome: 0, totalExpense: 0, balance: 0 });
+  const { user, logout } = useAuth();
 
   const fetchData = async () => {
     try {
@@ -32,9 +38,16 @@ function App() {
       <nav className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
-            <div className="flex items-center gap-2">
-              <Wallet className="w-8 h-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Finance Tracker</h1>
+            <div className="flex items-center">
+              <Wallet className="h-8 w-8 text-blue-600" />
+              <span className="ml-2 text-xl font-bold text-gray-900">Finance Tracker</span>
+            </div>
+            <div className="flex items-center">
+              <span className="mr-4 text-gray-700">Welcome, {user?.username}</span>
+              <button onClick={logout} className="flex items-center text-gray-600 hover:text-red-600">
+                <LogOut className="h-5 w-5 mr-1" />
+                Logout
+              </button>
             </div>
           </div>
         </div>
@@ -51,6 +64,27 @@ function App() {
         </div>
       </main>
     </div>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
